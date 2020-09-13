@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import bodyParser from 'body-parser';
 import genreRouter from './genre/GengreController';
 import authorRouter from './author/AuthorController';
 import bookRouter from './book/BookController';
@@ -8,7 +9,10 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + './../views/static'));
+
 app.set('views', path.join(__dirname, './../views'));
 app.set('views engine', 'ejs');
 
