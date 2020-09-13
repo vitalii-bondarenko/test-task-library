@@ -79,7 +79,7 @@
             </form>
         </div>
 
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <p>Books: <%= result.total %>
             </p>
 
@@ -87,7 +87,6 @@
                 <% for(const book of result.data) { %>
                     <div class="col">
                         <div class="card">
-                            <!--                    <img src="https://onlinelibrary.wiley.com/cms/asset/f40dc278-2dcb-4d29-a3b9-b830a2871431/9781119136828.cover.gif" alt="book">-->
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="/book/<%= book.id %>">
