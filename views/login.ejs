@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/styles/style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/author">Authors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/genre">Genres</a>
+            </li>
+        </ul>
+    </header>
+    <h1>Login</h1>
+
+    <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+    </form>
+
+</div>
+</body>
+</html>

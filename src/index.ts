@@ -4,6 +4,7 @@ import { Book } from './book/Book';
 import { Author } from './author/Author';
 import { Genre } from './genre/Genre';
 import { authorsNames, booksDescriptions, booksNames, genresNames } from './utils/mocks';
+import { User } from './user/User';
 
 createConnection({
   type: 'mysql',
@@ -16,7 +17,8 @@ createConnection({
   entities: [
     Book,
     Author,
-    Genre
+    Genre,
+    User
   ],
   migrations: [ 'migration/*.js' ],
   cli: {
