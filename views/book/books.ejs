@@ -28,99 +28,106 @@
         </ul>
     </header>
 
-    <form class="d-flex flex-column flex-md-row justify-content-md-between .align-items-center"
-          action="/" method="get">
-        <div class="form-group">
-            <label for="fullTextSearch">Name</label>
-            <input id="fullTextSearch"
-                   class="form-control"
-                   name="text"
-                   type="text"
-                   aria-describedby="emailHelp"
-                   placeholder="Search by name"
-                   value="<%= params.text %>">
-        </div>
-        <div class="form-group">
-            <label for="authorsSelect">Select authors</label>
-            <select name="authors" multiple class="form-control" id="authorsSelect">
-                <% for(const author of authors) { %>
-                    <% if (params.authors.includes(String(author.id))) { %>
-                        <option selected
-                                value="<%= author.id %>">
-                            <%= author.name %>
-                        </option>
-                    <% } else { %>
-                        <option value="<%= author.id %>">
-                            <%= author.name %>
-                        </option>
-                    <% } %>
-                <% } %>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="authorsSelect">Select genres</label>
-            <select name="genres" multiple class="form-control" id="genresSelect">
-                <% for(const genre of genres) { %>
-                    <% if (params.genres.includes(String(genre.id))) { %>
-                        <option selected
-                                value="<%= genre.id %>">
-                            <%= genre.name %>
-                        </option>
-                    <% } else { %>
-                        <option value="<%= genre.id %>">
-                            <%= genre.name %>
-                        </option>
-                    <% } %>
-                <% } %>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <p>Books: <%= result.total %></p>
-
-    <main class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-        <% for(const book of result.data) { %>
-            <div class="col">
-                <div class="card">
-                    <!--                    <img src="https://onlinelibrary.wiley.com/cms/asset/f40dc278-2dcb-4d29-a3b9-b830a2871431/9781119136828.cover.gif" alt="book">-->
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="/book/<%= book.id %>">
-                                <%= book.name %>
-                            </a>
-                        </h5>
-                        <p class="card-text">
-                            Authors:
-                            <br>
-                            <% for(const author of book.authors) { %>
-                                <button type="button"
-                                        class="btn btn-link">
-                                    <a href="/author/<%= author.id %>">
-                                        <%= author.name %>
-                                    </a>
-                                </button>
-                            <% } %>
-                            <br>
-                            Genre:
-                            <button type="button"
-                                    class="btn btn-link">
-                                <a href="/genre/<%= book.genre.id %>">
-                                    <%= book.genre.name %>
-                                </a>
-                            </button>
-
-                        </p>
-
-                    </div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <form class="position-fixed-md" action="/" method="get">
+                <div class="form-group">
+                    <label for="fullTextSearch">Name</label>
+                    <input id="fullTextSearch"
+                           class="form-control"
+                           name="text"
+                           type="text"
+                           aria-describedby="emailHelp"
+                           placeholder="Search by name"
+                           value="<%= params.text %>">
                 </div>
-            </div>
-        <% } %>
-    </main>
+                <div class="form-group">
+                    <label for="authorsSelect">Select authors</label>
+                    <select name="authors" multiple class="form-control" id="authorsSelect">
+                        <% for(const author of authors) { %>
+                            <% if (params.authors.includes(String(author.id))) { %>
+                                <option selected
+                                        value="<%= author.id %>">
+                                    <%= author.name %>
+                                </option>
+                            <% } else { %>
+                                <option value="<%= author.id %>">
+                                    <%= author.name %>
+                                </option>
+                            <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="authorsSelect">Select genres</label>
+                    <select name="genres" multiple class="form-control" id="genresSelect">
+                        <% for(const genre of genres) { %>
+                            <% if (params.genres.includes(String(genre.id))) { %>
+                                <option selected
+                                        value="<%= genre.id %>">
+                                    <%= genre.name %>
+                                </option>
+                            <% } else { %>
+                                <option value="<%= genre.id %>">
+                                    <%= genre.name %>
+                                </option>
+                            <% } %>
+                        <% } %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
 
-    <nav class="d-flex justify-content-center">
-        <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
-    </nav>
+        <div class="col-8">
+            <p>Books: <%= result.total %>
+            </p>
+
+            <main class="row row-cols-1">
+                <% for(const book of result.data) { %>
+                    <div class="col">
+                        <div class="card">
+                            <!--                    <img src="https://onlinelibrary.wiley.com/cms/asset/f40dc278-2dcb-4d29-a3b9-b830a2871431/9781119136828.cover.gif" alt="book">-->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="/book/<%= book.id %>">
+                                        <%= book.name %>
+                                    </a>
+                                </h5>
+                                <p class="card-text">
+                                    Authors:
+                                    <% for(const author of book.authors) { %>
+                                        <button type="button"
+                                                class="btn btn-link">
+                                            <a href="/author/<%= author.id %>">
+                                                <%= author.name %>
+                                            </a>
+                                        </button>
+                                    <% } %>
+                                    <br>
+                                    Genre:
+                                    <button type="button"
+                                            class="btn btn-link">
+                                        <a href="/genre/<%= book.genre.id %>">
+                                            <%= book.genre.name %>
+                                        </a>
+                                    </button>
+
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </main>
+
+            <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
+
+        </div>
+
+    </div>
+
+
 </div>
 
 </body>

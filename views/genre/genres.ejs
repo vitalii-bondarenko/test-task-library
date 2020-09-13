@@ -49,9 +49,7 @@
         <% } %>
     </main>
 
-    <nav class="d-flex justify-content-center">
-        <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
-    </nav>
+    <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
 </div>
 
 </body>

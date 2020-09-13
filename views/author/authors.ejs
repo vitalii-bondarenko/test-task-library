@@ -29,6 +29,7 @@
     </header>
 
     <p>Authors: <%= result.total %></p>
+
     <main class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
         <% for(const author of result.data) { %>
             <div class="col">
@@ -48,9 +49,8 @@
         <% } %>
     </main>
 
-    <nav class="d-flex justify-content-center">
-        <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
-    </nav>
+    <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
+
 </div>
 
 </body>
