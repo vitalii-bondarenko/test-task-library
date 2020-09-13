@@ -1,5 +1,5 @@
 import { Book } from './Book';
-import { DeleteResult, getRepository } from 'typeorm';
+import { DeleteResult, getRepository, UpdateResult } from 'typeorm';
 import { PaginationRequestDto } from '../shared/PaginationRequestDto';
 import { PaginatedResponseDto } from '../shared/PaginatedResponseDto';
 import { BookParamsDto } from './BookParamsDto';
@@ -11,7 +11,6 @@ class BookService {
   }
 
   async getAllBooks(pagination: PaginationRequestDto, query: BookParamsDto): Promise<PaginatedResponseDto<Book>> {
-
     const dbQuery = this.getBookRepository()
       .createQueryBuilder('book')
       .leftJoinAndSelect('book.genre', 'genre');
@@ -43,14 +42,18 @@ class BookService {
     return this.getBookRepository().findOneOrFail(id, { relations: [ 'authors', 'genre' ] });
   }
 
-  async deleteBook(id: string): Promise<DeleteResult> {
-    return this.getBookRepository().delete(id);
-  }
-
   async createBook(data: BookDto) {
     const book = await this.getBookRepository().create(data);
     return await this.getBookRepository().save(book);
   };
+
+  async updateBook(id: string, data: Partial<Book>): Promise<UpdateResult> {
+    return await this.getBookRepository().update(id, data);
+  };
+
+  async deleteBook(id: string): Promise<DeleteResult> {
+    return this.getBookRepository().delete(id);
+  }
 
 }
 

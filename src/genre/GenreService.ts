@@ -1,4 +1,4 @@
-import { DeleteResult, getRepository } from 'typeorm';
+import { DeleteResult, getRepository, UpdateResult } from 'typeorm';
 import { Genre } from './Genre';
 import { PaginationRequestDto } from '../shared/PaginationRequestDto';
 import { PaginatedResponseDto } from '../shared/PaginatedResponseDto';
@@ -23,18 +23,22 @@ class GenreService {
     return new PaginatedResponseDto(result, pagination);
   }
 
-  getGenre(id: string): Promise<Genre> {
+  async getGenre(id: string): Promise<Genre> {
     return this.getGenreRepository().findOneOrFail(id, { relations: [ 'books' ] });
-  }
-
-  deleteGenre(id: string): Promise<DeleteResult> {
-    return this.getGenreRepository().delete(id);
   }
 
   async createGenre(data: Genre) {
     const book = await this.getGenreRepository().create(data);
     return await this.getGenreRepository().save(book);
   };
+
+  async updateGenre(id, data: Partial<Genre>): Promise<UpdateResult> {
+    return this.getGenreRepository().update(id, data);
+  }
+
+  async deleteGenre(id: string): Promise<DeleteResult> {
+    return this.getGenreRepository().delete(id);
+  }
 
 }
 

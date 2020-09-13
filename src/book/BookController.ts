@@ -11,9 +11,10 @@ import { BookDto } from './BookDto';
 const bookRouter = express.Router();
 
 bookRouter.get('/', getAllBooks);
+bookRouter.post('/book', createBook);
+bookRouter.put('/book/:id', updateBook);
 bookRouter.get('/book/:id', getBook);
 bookRouter.delete('/book/:id', deleteBook);
-bookRouter.post('/book', createBook);
 
 async function getBook(req: Request, res: Response) {
   try {
@@ -55,9 +56,7 @@ async function getAllBooks(req: Request, res: Response) {
     res.render('book/books.ejs', { result, authors, genres, params, path: req.baseUrl + '/' });
 
   } catch (e) {
-
     res.redirect('/');
-
     console.error(e.message);
   }
 }
@@ -70,15 +69,37 @@ async function createBook(req: Request, res: Response) {
 
     res.status(200).json(result);
   } catch (e) {
+    res.status(500).json(e.message);
+    console.error(e);
+  }
+}
+
+async function updateBook(req: Request, res: Response) {
+  try {
+    const id = req.params.id;
+
+    const data = new BookDto(req.body);
+
+    const result = await $BookService.updateBook(id, data);
+
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json(e.message);
     console.error(e);
   }
 }
 
 async function deleteBook(req: Request, res: Response) {
-  const id = req.params.id;
-  const result = await $BookService.deleteBook(id);
+  try {
+    const id = req.params.id;
+    const result = await $BookService.deleteBook(id);
 
-  res.status(201).json(result);
+    res.status(201).json(result);
+  } catch (e) {
+    res.status(500).json(e.message);
+    console.error(e);
+  }
+
 }
 
 export default bookRouter;
