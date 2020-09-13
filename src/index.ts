@@ -3,7 +3,7 @@ import { startServer } from './server';
 import { Book } from './book/Book';
 import { Author } from './author/Author';
 import { Genre } from './genre/Genre';
-import { authorsNames, booksNames, genresNames } from './utils/mocks';
+import { authorsNames, booksDescriptions, booksNames, genresNames } from './utils/mocks';
 
 createConnection({
   type: 'mysql',
@@ -49,8 +49,10 @@ async function loadData() {
     for (const name of booksNames) {
       const book = new Book();
       book.name = name;
-      book.genre = await entityManager.findOne(Genre, generateNumberFromOneTo(10));
       book.authors = [];
+      book.genre = await entityManager.findOne(Genre, generateNumberFromOneTo(10));
+      book.description = booksDescriptions[ generateNumberFromOneTo(10) - 1 ];
+
       for (let i = 0; i < generateNumberFromOneTo(5); i++) {
         const author = await entityManager.findOne(Author, generateNumberFromOneTo(10));
         book.authors.push(author);
@@ -59,6 +61,8 @@ async function loadData() {
       book.authors = book.authors.filter((author, index, self) => self.findIndex(res => (res.id === author.id)) === index);
       await entityManager.save(book);
     }
+
+    console.log('loading finished');
 
   } catch (e) {
     console.error(e);

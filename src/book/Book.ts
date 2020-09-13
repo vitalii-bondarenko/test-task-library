@@ -11,6 +11,9 @@ export class Book {
   @Column({ name: 'name', type: 'varchar' })
   name!: string;
 
+  @Column({ type: 'text' })
+  description!: string;
+
   @ManyToMany(type => Author, author => author.books)
   @JoinTable()
   authors: Author[];
