@@ -1,0 +1,11 @@
+header .active {
+  color: black;
+}
+
+.card-title {
+  text-transform: capitalize;
+}
+
+.page-title {
+  text-transform: capitalize;
+}

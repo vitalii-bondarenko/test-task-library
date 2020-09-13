@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library(Authors)</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/styles/style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/author">Authors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/genre">Genres</a>
+            </li>
+        </ul>
+    </header>
+
+    <p>Authors: <%= result.total %></p>
+    <main class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        <% for(const author of result.data) { %>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/author/<%= author.id %>">
+                                <%= author.name %>
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            Books: <%= author.books.length %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+
+    <nav class="d-flex justify-content-center">
+        <%- include('./../pagination.ejs', { path, totalPages: result.totalPages, page: result.page }); %>
+    </nav>
+</div>
+
+</body>
+</html>

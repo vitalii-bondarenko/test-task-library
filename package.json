@@ -1,0 +1,25 @@
+{
+  "name": "test-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "tsc && node build/index.js",
+    "start-dev": "nodemon -e ts -w ./ -x npm run start-server"
+  },
+  "author": "Vitalii Bondarenko",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "3.1.5",
+    "express": "4.17.1",
+    "mysql": "2.18.1",
+    "reflect-metadata": "0.1.13",
+    "typeorm": "0.2.25"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.0",
+    "@types/node": "^14.6.4",
+    "@types/express": "^4.17.7",
+    "nodemon": "2.0.4"
+  }
+}
