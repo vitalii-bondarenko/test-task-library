@@ -33,8 +33,8 @@
                     <%= book.name %>
                 </h5>
                 <p class="card-text">
-                    Authors:
-                    <br>
+                    <%= book.description %> <br>
+                    <h6>Authors:</h6>
                     <% for(const author of book.authors) { %>
                         <button type="button"
                                 class="btn btn-link">
@@ -44,7 +44,7 @@
                         </button>
                     <% } %>
                     <br>
-                    Genre:
+                    <h6>Genre:</h6>
                     <button type="button"
                             class="btn btn-link">
                         <a href="/genre/<%= book.genre.id %>">
