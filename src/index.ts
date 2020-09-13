@@ -27,7 +27,9 @@ createConnection({
     console.log('Db connected');
     startServer();
 
-    loadData();
+    if (process.env.MYSQL_DATABASE) {
+      loadData().then(() => console.log('loading finished'));
+    }
 
   })
   .catch(error => console.error(error));
@@ -69,8 +71,6 @@ async function loadData() {
       book.authors = book.authors.filter((author, index, self) => self.findIndex(res => (res.id === author.id)) === index);
       await entityManager.save(book);
     }
-
-    console.log('loading finished');
 
   } catch (e) {
     console.error(e);
