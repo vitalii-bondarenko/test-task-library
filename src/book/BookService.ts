@@ -12,8 +12,6 @@ class BookService {
 
   async getAllBooks(pagination: PaginationRequestDto, query: BookParamsDto): Promise<PaginatedResponseDto<Book>> {
 
-    console.log(query);
-
     const dbQuery = this.getBookRepository()
       .createQueryBuilder('book')
       .leftJoinAndSelect('book.genre', 'genre');
@@ -37,8 +35,6 @@ class BookService {
       .skip(pagination.skip)
       .take(pagination.perPage)
       .getManyAndCount();
-
-    console.log(JSON.stringify(result));
 
     return new PaginatedResponseDto(result, pagination);
   }

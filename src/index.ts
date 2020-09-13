@@ -7,9 +7,12 @@ import { authorsNames, booksDescriptions, booksNames, genresNames } from './util
 
 createConnection({
   type: 'mysql',
-  url: process.env.URI || 'mysql://uqagdrhlfohsbz98:blomO3h0YqEU5NujlRlk@bfwv7gqnufsbqlxkmiqi-mysql.services.clever-cloud.com:3306/bfwv7gqnufsbqlxkmiqi',
+  host: process.env.MYSQL_HOST || 'bfwv7gqnufsbqlxkmiqi-mysql.services.clever-cloud.com',
+  database: process.env.MYSQL_DATABASE || 'bfwv7gqnufsbqlxkmiqi',
+  username: process.env.MYSQL_USER || 'uqagdrhlfohsbz98',
+  password: process.env.MYSQL_PASSWORD || 'blomO3h0YqEU5NujlRlk',
+  port: 3306,
   synchronize: true,
-  // dropSchema: true,
   entities: [
     Book,
     Author,
@@ -23,12 +26,17 @@ createConnection({
   .then(() => {
     console.log('Db connected');
     startServer();
-    // loadData();
+
+    loadData();
+
   })
   .catch(error => console.error(error));
 
+
 async function loadData() {
   try {
+    console.log('loading started');
+
     const entityManager = getManager();
     const generateNumberFromOneTo = (limit: number): number => {
       return Math.ceil(Math.random() * limit);

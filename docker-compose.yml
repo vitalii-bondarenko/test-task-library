@@ -2,12 +2,8 @@ version: '3.8'
 
 services:
   database:
-    image: mysql:8
-    container_name: database
-    ports:
-      - 3306:3306
-    expose:
-      - 3306
+    image: mysql:5.7.31
+    restart: on-failure
     env_file:
       - .env
     environment:
@@ -15,19 +11,20 @@ services:
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+    ports:
+      - "3306:3306"
   application:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
+    build: .
+    restart: on-failure
     env_file:
       - .env
     environment:
-      URI: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}'
+      MYSQL_HOST: 'database'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       PORT: '3000'
-    volumes:
-      - .
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - database
